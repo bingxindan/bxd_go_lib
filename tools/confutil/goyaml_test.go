@@ -1,6 +1,6 @@
 package confutil
 
-import (
+/*import (
 	"os"
 	"strings"
 	"testing"
@@ -66,4 +66,4 @@ func TestGoYamlObject(t *testing.T) {
 	assert.Equal(t, ob.Object[2].Host, "public3")
 	assert.Equal(t, ob.Object[2].Port, "9094")
 
-}
+}*/

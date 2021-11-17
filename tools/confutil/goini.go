@@ -1,6 +1,6 @@
 package confutil
 
-import (
+/*import (
 	"errors"
 	"fmt"
 	"log"
@@ -142,4 +142,4 @@ func setWithProperType(t reflect.Type, value string, field reflect.Value) error 
 		return fmt.Errorf("unsupported type '%s'", t)
 	}
 	return nil
-}
+}*/

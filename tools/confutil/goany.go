@@ -1,8 +1,7 @@
 package confutil
 
-import (
+/*import (
 	"strings"
-
 	"github.com/spf13/cast"
 	yaml "gopkg.in/yaml.v2"
 )
@@ -125,4 +124,4 @@ func (this *AnyFile) GetSectionObject(section string, obj interface{}) error {
 		}
 	}
 	return nil
-}
+}*/

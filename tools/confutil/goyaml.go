@@ -1,6 +1,6 @@
 package confutil
 
-import (
+/*import (
 	"io/ioutil"
 	"log"
 	"strings"
@@ -148,4 +148,4 @@ func (this *YamlFile) GetSectionObject(section string, obj interface{}) error {
 		}
 	}
 	return nil
-}
+}*/

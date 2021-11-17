@@ -1,6 +1,6 @@
 package confutil
 
-import (
+/*import (
 	"errors"
 	"log"
 	"os"
@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"/flagutil"
+	"github.com/bingxindan/bxd_go_lib/flagutil"
 
 	"github.com/kardianos/osext"
 )
@@ -217,14 +217,14 @@ func GetConfDefault(sec, key, def string) string {
 	}
 	//if value not existed return def
 	return g_cfg.MustValue(sec, key, def)
-}
+}*/
 
 //get configs function,like:
 /*
 [Redis]
 redis = 127.0.0.1:6379 127.0.0.1:7379
 */
-//GetConfs("Redis") like "redis = 127.0.0.1:6379 127.0.0.1:7379",return []string{127.0.0.1:6379,127.0.0.1:7379}
+/*//GetConfs("Redis") like "redis = 127.0.0.1:6379 127.0.0.1:7379",return []string{127.0.0.1:6379,127.0.0.1:7379}
 func GetConfs(sec, key string) []string {
 	//init
 	InitConfig()
@@ -252,7 +252,7 @@ func GetConfStringMap(sec string) (ret map[string]string) {
 		ret = make(map[string]string, 0)
 	}
 	return
-}
+}*/
 
 //get config map
 //return map[string][]string,like:
@@ -260,7 +260,7 @@ func GetConfStringMap(sec string) (ret map[string]string) {
    [Redis]
    reids = 127.0.0.1:6379 127.0.0.0:7379
 */
-//GetConfArrayMap("Redis") return map[string][]string{"redis":[127.0.0.1:6379,127.0.0.1:7379]}
+/*//GetConfArrayMap("Redis") return map[string][]string{"redis":[127.0.0.1:6379,127.0.0.1:7379]}
 func GetConfArrayMap(sec string) (ret map[string][]string) {
 	//init
 	InitConfig()
@@ -287,4 +287,4 @@ func ConfMapToStruct(sec string, v interface{}) error {
 		return nil
 	}
 	return g_cfg.GetSectionObject(sec, v)
-}
+}*/

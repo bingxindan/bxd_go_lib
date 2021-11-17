@@ -1,6 +1,6 @@
 package confutil
 
-import (
+/*import (
 	"os"
 	"strings"
 	"testing"
@@ -42,4 +42,4 @@ func TestGoConfig(t *testing.T) {
 	assert.Equal(t, s.Hosts[1], "127.0.0.2")
 	assert.Equal(t, s.Timeout, time.Second*5)
 
-}
+}*/
