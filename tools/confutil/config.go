@@ -72,8 +72,9 @@ func InitConfig() {
 
 	//set the default path
 	if len(*config_path) == 0 {
-		*config_path = "../conf/conf.ini"
+		*config_path = "../Conf/Conf.ini"
 	}
+	
 	log.Printf("CONF INIT,path:%s", *config_path)
 	//load config from path
 	if g_cfg, err = Load(*config_path); err != nil {
@@ -97,7 +98,7 @@ func Binhome() string {
 	}
 	if path, err := osext.ExecutableFolder(); err == nil {
 		if strings.HasPrefix(path, "/tmp/go-build") {
-			return home() + "/conf/"
+			return home() + "/Conf/"
 		}
 		return path
 	} else {
@@ -162,7 +163,7 @@ func Load(path string) (cfg Config, err error) {
 		if !strings.HasPrefix(path, "/") {
 			path = Binhome() + "/" + path
 			if _, err := os.Stat(path); os.IsNotExist(err) {
-				path = home() + "/conf/" + filepath.Base(path)
+				path = home() + "/Conf/" + filepath.Base(path)
 			}
 		}
 		//load file and create cache

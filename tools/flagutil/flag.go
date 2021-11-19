@@ -6,7 +6,7 @@ import (
 
 var signal = flag.String("s", "", "start or stop")
 var confpath = flag.String("c", "", "config path")
-var cfgpath = flag.String("cfg", "conf/config.json", "json config path")
+var cfgpath = flag.String("cfg", "Conf/Config.json", "json config path")
 var confprefix = flag.String("p", "", "config path prefix with no trailing backslash")
 var foreground = flag.Bool("f", false, "foreground")
 var mock = flag.Bool("m", false, "mock")
