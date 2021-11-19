@@ -40,12 +40,6 @@ func newDBDaoWithParams(host string, driver string) (Db *DBDao) {
 	if err != nil {
 		log.Fatal(err)
 	}
-	/*Db.Engine.Logger.SetLevel(core.LOG_DEBUG)
-	  Db.Engine.ShowSQL = true
-	  Db.Engine.ShowInfo = true
-	  Db.Engine.ShowDebug = true
-	  Db.Engine.ShowErr = true
-	  Db.Engine.ShowWarn = true*/
 	Db.Engine.SetMaxOpenConns(maxConn)
 	Db.Engine.SetMaxIdleConns(maxIdle)
 	Db.Engine.SetConnMaxLifetime(time.Second * 3000)

@@ -74,7 +74,7 @@ func InitConfig() {
 	if len(*config_path) == 0 {
 		*config_path = "../Conf/Conf.ini"
 	}
-	
+
 	log.Printf("CONF INIT,path:%s", *config_path)
 	//load config from path
 	if g_cfg, err = Load(*config_path); err != nil {
