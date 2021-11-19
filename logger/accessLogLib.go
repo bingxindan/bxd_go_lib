@@ -2,7 +2,7 @@ package logger
 
 import (
 	"fmt"
-	"xxx/builders"
+	"github.com/bingxindan/bxd_go_lib/logger/builders"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/zap"
 	"os"

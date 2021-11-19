@@ -2,8 +2,9 @@ package logger
 
 import (
 	"context"
+	"github.com/bingxindan/bxd_go_lib/logger/builders"
 	"github.com/bingxindan/bxd_go_lib/logger/logutils"
-	"xxx/builders"
+	"github.com/bingxindan/bxd_go_lib/logger/plugin"
 )
 
 var builder MessageBuilder = new(builders.DefaultBuilder)
