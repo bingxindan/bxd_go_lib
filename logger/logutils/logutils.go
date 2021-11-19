@@ -1,9 +1,8 @@
 package logutils
 
 import (
+	"github.com/bingxindan/bxd_go_lib/logger/log4go"
 	"strings"
-
-	"xxx/log4go"
 )
 
 var DefaultReplacer *strings.Replacer

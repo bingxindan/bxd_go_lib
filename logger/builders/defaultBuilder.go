@@ -3,6 +3,7 @@ package builders
 import (
 	"context"
 	"fmt"
+	"github.com/bingxindan/bxd_go_lib/logger/log4go"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -10,7 +11,6 @@ import (
 	"strings"
 	"time"
 
-	"xxx/log4go"
 	"xxx/logutils"
 	"xxx/plugin"
 	"xxx/stackerr"

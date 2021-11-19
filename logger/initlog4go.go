@@ -3,11 +3,11 @@ package logger
 import (
 	"encoding/xml"
 	"fmt"
+	"github.com/bingxindan/bxd_go_lib/logger/log4go"
 	"io/ioutil"
 	"os"
 	"strings"
 
-	"xxx/log4go"
 	"xxx/logutils"
 )
 
