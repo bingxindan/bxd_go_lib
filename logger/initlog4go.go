@@ -4,11 +4,11 @@ import (
 	"encoding/xml"
 	"fmt"
 	"github.com/bingxindan/bxd_go_lib/logger/log4go"
+	"github.com/bingxindan/bxd_go_lib/logger/logutils"
 	"io/ioutil"
 	"os"
 	"strings"
 
-	"xxx/logutils"
 )
 
 type xmlProperty struct {

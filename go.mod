@@ -8,6 +8,7 @@ require (
 	//github.com/go-xorm/builder v0.0.0-20180322150003-a9b7ffcca3f0 // indirect
 	//github.com/go-xorm/core v0.0.0-20180322150003-0177c08cee88 // indirect
 	github.com/go-xorm/xorm v0.7.9
+	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
 	github.com/kr/pretty v0.3.0 // indirect
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5

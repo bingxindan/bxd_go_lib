@@ -3,7 +3,7 @@ package example
 import (
 	"context"
 	"fmt"
-	"xxx"
+	"github.com/bingxindan/bxd_go_lib/logger"
 	"github.com/sirupsen/logrus"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"

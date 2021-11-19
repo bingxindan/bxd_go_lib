@@ -4,6 +4,9 @@ import (
 	"context"
 	"fmt"
 	"github.com/bingxindan/bxd_go_lib/logger/log4go"
+	"github.com/bingxindan/bxd_go_lib/logger/logutils"
+	"github.com/bingxindan/bxd_go_lib/logger/plugin"
+	"github.com/bingxindan/bxd_go_lib/logger/stackerr"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -11,9 +14,6 @@ import (
 	"strings"
 	"time"
 
-	"xxx/logutils"
-	"xxx/plugin"
-	"xxx/stackerr"
 	"github.com/spf13/cast"
 )
 

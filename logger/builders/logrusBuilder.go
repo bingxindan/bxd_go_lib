@@ -3,8 +3,8 @@ package builders
 import (
 	"context"
 	"fmt"
-	"xxx/logutils"
-	"xxx/stackerr"
+	"github.com/bingxindan/bxd_go_lib/logger/logutils"
+	"github.com/bingxindan/bxd_go_lib/logger/stackerr"
 	"github.com/sirupsen/logrus"
 )
 

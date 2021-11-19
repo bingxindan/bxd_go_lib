@@ -2,12 +2,11 @@ package example
 
 import (
 	"context"
+	"github.com/bingxindan/bxd_go_lib/logger"
+	"github.com/bingxindan/bxd_go_lib/logger/builders"
+	"github.com/bingxindan/bxd_go_lib/logger/logtrace"
 	"strconv"
 	"time"
-
-	logger "xxx"
-	"xxx/builders"
-	"xxx/logtrace"
 )
 
 func example_tracelog() {

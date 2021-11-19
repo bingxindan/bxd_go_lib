@@ -2,8 +2,8 @@ package logtrace
 
 import (
 	"context"
+	"github.com/bingxindan/bxd_go_lib/tools/jsutil"
 
-	"/jsutil"
 	"github.com/smallnest/rpcx/share"
 )
 
@@ -16,6 +16,7 @@ func InjectTraceNodeToRpcx(ctx context.Context) context.Context {
 	if len(traceRpcId) == 0 {
 		return ctx
 	}
+
 	metaStr, err := jsutil.Json.MarshalToString(meta.ForkMap())
 	if err != nil {
 		metaStr = ""
