@@ -48,7 +48,7 @@ func (this *TraceBuilder) LoggerX(ctx context.Context, lvl string, tag string, a
 			message = message + " COST:" + fmt.Sprintf("%.6f", cost.Seconds())
 		}
 	}
-	traceNode := logtrace.ExtractTraceNodeFromXesContext(ctx)
+	traceNode := logtrace.ExtractTraceNodeFromBxdContext(ctx)
 	metadata := traceNode.ForkMap()
 	metadata["x_department"] = this.department
 	metadata["x_version"] = this.version

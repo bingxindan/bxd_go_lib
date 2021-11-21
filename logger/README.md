@@ -117,10 +117,10 @@ ctx = context.WithValue(ctx, "start", time.Now())   //每条日志会计算出�
 ```golang  
 调用：    
 logger.NewError("error",SYSTEM_DEFAULT)
-func NewError(err interface{}, ext ...XesError)       
+func NewError(err interface{}, ext ...BxdError)       
 //err传参支持string，error类型(会自动解析rpc server错误)，表示错误根本原因    
-//ext XesError，Xes错误码，对外输出错误信息，不传默认系统异常    
-type XesError struct {        
+//ext BxdError，Bxd错误码，对外输出错误信息，不传默认系统异常    
+type BxdError struct {        
     Code int    
     Msg  string    
 } 

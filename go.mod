@@ -18,4 +18,5 @@ require (
 	go.uber.org/zap v1.19.1
 	gopkg.in/yaml.v2 v2.4.0
 	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb
+	github.com/gin-gonic/gin v1.7.5
 )

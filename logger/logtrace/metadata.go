@@ -45,7 +45,7 @@ func NewTraceId() string {
 }
 
 //Get TraceNode
-func ExtractTraceNodeFromXesContext(ctx context.Context) *TraceNode {
+func ExtractTraceNodeFromBxdContext(ctx context.Context) *TraceNode {
 	meta := ctx.Value(GetMetadataKey())
 	if meta == nil {
 		return NewTraceNode()
@@ -60,7 +60,7 @@ func ExtractTraceNodeFromXesContext(ctx context.Context) *TraceNode {
 
 //TraceNode add other kv
 func InjectMetadata(ctx context.Context, mapPtr *map[string]string) bool {
-	meta := ExtractTraceNodeFromXesContext(ctx)
+	meta := ExtractTraceNodeFromBxdContext(ctx)
 	traceRpcId := meta.Get("x_rpcid")
 	if len(traceRpcId) == 0 {
 		return false
@@ -73,7 +73,7 @@ func InjectMetadata(ctx context.Context, mapPtr *map[string]string) bool {
 
 //Incr RpcId 1.1.1=>1.1.2
 func IncrementRpcId(ctx context.Context) bool {
-	meta := ExtractTraceNodeFromXesContext(ctx)
+	meta := ExtractTraceNodeFromBxdContext(ctx)
 	traceRpcId := meta.Get("x_rpcid")
 	if len(traceRpcId) == 0 {
 		return false
@@ -98,7 +98,7 @@ func IncrementRpcId(ctx context.Context) bool {
 
 //Append RpcId  1.1.1=>1.1.1.0
 func AppendNewRpcId(ctx context.Context) bool {
-	meta := ExtractTraceNodeFromXesContext(ctx)
+	meta := ExtractTraceNodeFromBxdContext(ctx)
 	traceRpcId := meta.Get("x_rpcid")
 	if len(traceRpcId) == 0 {
 		return false
@@ -113,7 +113,7 @@ func AppendNewRpcId(ctx context.Context) bool {
 
 //Ctx add k,v
 func AppendKeyValue(ctx context.Context, key, value string) bool {
-	meta := ExtractTraceNodeFromXesContext(ctx)
+	meta := ExtractTraceNodeFromBxdContext(ctx)
 	traceRpcId := meta.Get("x_rpcid")
 	if len(traceRpcId) == 0 {
 		return false

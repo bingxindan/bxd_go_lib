@@ -11,7 +11,7 @@ var rpcxMetaKey = share.ReqMetaDataKey
 
 func InjectTraceNodeToRpcx(ctx context.Context) context.Context {
 	//IncrementRpcId(ctx)
-	meta := ExtractTraceNodeFromXesContext(ctx)
+	meta := ExtractTraceNodeFromBxdContext(ctx)
 	traceRpcId := meta.Get("x_rpcid")
 	if len(traceRpcId) == 0 {
 		return ctx
@@ -47,7 +47,7 @@ func ExtractTraceNodeToXexContext(ctx context.Context) context.Context {
 		if ok1 {
 			var mapVal map[string]string
 			if jsutil.Json.UnmarshalFromString(metaStr, &mapVal) == nil {
-				tNode := ExtractTraceNodeFromXesContext(ctx)
+				tNode := ExtractTraceNodeFromBxdContext(ctx)
 				for k, v := range mapVal {
 					tNode.Set(k, v)
 				}
