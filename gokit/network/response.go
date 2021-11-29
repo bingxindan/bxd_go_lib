@@ -97,3 +97,8 @@ func Respond(ctx *gin.Context, status int, xe logger.BxdError, data interface{})
 	}
 	ctx.JSON(status, resp)
 }
+
+func Raw(stat, code int, msg string) interface{} {
+	ret := response{Stat: stat, Code: code, Message: msg, Data: nil}
+	return ret
+}
