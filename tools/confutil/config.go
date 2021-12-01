@@ -56,6 +56,9 @@ func InitConfig() {
 		return
 	}
 
+	//load the plugin
+	loadPlugin()
+
 	//get the path prefix args
 	//when the path is a opposite path, you need set the prefix,default user home,like "/home/dev"
 	confprefix := flagutil.GetConfigPrefix()
