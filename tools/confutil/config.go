@@ -56,9 +56,6 @@ func InitConfig() {
 		return
 	}
 
-	//load the plugin
-	loadPlugin()
-
 	//get the path prefix args
 	//when the path is a opposite path, you need set the prefix,default user home,like "/home/dev"
 	confprefix := flagutil.GetConfigPrefix()
@@ -67,17 +64,17 @@ func InitConfig() {
 	}
 
 	//get the path args
-	config_path := flagutil.GetConfig()
+	configPath := flagutil.GetConfig()
 	var err error
 
 	//set the default path
-	if len(*config_path) == 0 {
-		*config_path = "../Conf/Conf.ini"
+	if len(*configPath) == 0 {
+		*configPath = "../Conf/Conf.ini"
 	}
 
-	log.Printf("CONF INIT,path:%s", *config_path)
+	log.Printf("CONF INIT,path:%s", *configPath)
 	//load config from path
-	if g_cfg, err = Load(*config_path); err != nil {
+	if g_cfg, err = Load(*configPath); err != nil {
 		g_cfg = nil
 		log.Printf("Conf,err%v", err)
 	}
