@@ -72,7 +72,7 @@ func InitConfig() {
 
 	//set the default path
 	if len(*configPath) == 0 {
-		*configPath = "../Conf/Conf.ini"
+		*configPath = "/home/www/jz_api/Conf/Conf.ini"
 	}
 
 	log.Printf("CONF INIT,path:%s", *configPath)
