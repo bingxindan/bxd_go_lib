@@ -56,23 +56,13 @@ func InitConfig() {
 		return
 	}
 
-	//load the plugin
-	loadPlugin()
-
-	//get the path prefix args
-	//when the path is a opposite path, you need set the prefix,default user home,like "/home/dev"
-	confprefix := flagutil.GetConfigPrefix()
-	if len(*confprefix) != 0 {
-		SetConfPathPrefix(*confprefix)
-	}
-
 	//get the path args
 	configPath := flagutil.GetConfig()
 	var err error
 
 	//set the default path
 	if len(*configPath) == 0 {
-		*configPath = "/home/zhangming/jz_api/Conf/Conf.ini"
+		*configPath = "../Conf/Conf.ini"
 	}
 
 	log.Printf("CONF INIT,path:%s", *configPath)
@@ -129,13 +119,6 @@ func Set(section, key string, value interface{}) {
 //by use flag -c=xxx,and you need provide a xxx.go which implement the
 //Config interface and register the load function in plugin.go
 func Load(path string) (cfg Config, err error) {
-	//load any module
-	//path is not a valid path
-	if !strings.Contains(path, "/") {
-		fn := anyFileMap[path]
-		cfg, err = fn()
-		return
-	}
 	//load ini or yaml
 	//path must has more than 3 bytes
 	if len([]byte(path)) < 4 {
@@ -173,9 +156,9 @@ func Load(path string) (cfg Config, err error) {
 				config_cache.cache[path] = cfg
 			}
 		} else {
-			if cfg, err = loadIniFile(path); err == nil {
+			/*if cfg, err = loadIniFile(path); err == nil {
 				config_cache.cache[path] = cfg
-			}
+			}*/
 		}
 		config_cache.Unlock()
 	}

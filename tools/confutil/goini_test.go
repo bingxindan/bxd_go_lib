@@ -1,13 +1,9 @@
 package confutil
 
-/*import (
-	"os"
-	"strings"
+import (
+	"fmt"
 	"testing"
 	"time"
-
-	"/flagutil"
-	"github.com/stretchr/testify/assert"
 )
 
 type IniStruct struct {
@@ -19,7 +15,10 @@ type IniStruct struct {
 }
 
 func TestGoConfig(t *testing.T) {
-	flagutil.SetConfig("conf/conf.ini")
+	obj := new(IniFile)
+	a, err := obj.LoadIniFile("/Users/lauren/work/goweb/jz_api/Conf/Conf.ini")
+	fmt.Println(11, a.Format, 22, err)
+	/*flagutil.SetConfig("conf/conf.ini")
 	SetConfPathPrefix(os.Getenv("GOPATH") + "/src/confutil")
 	assert.Equal(t, "goconfig", GetConf("goconfig", "name"))
 	assert.Equal(t, GetConfDefault("goconfig", "name", ""), "goconfig")
@@ -40,6 +39,6 @@ func TestGoConfig(t *testing.T) {
 	assert.Equal(t, s.Rate, float32(1.01))
 	assert.Equal(t, s.Hosts[0], "127.0.0.1")
 	assert.Equal(t, s.Hosts[1], "127.0.0.2")
-	assert.Equal(t, s.Timeout, time.Second*5)
+	assert.Equal(t, s.Timeout, time.Second*5)*/
 
-}*/
+}

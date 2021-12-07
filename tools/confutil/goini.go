@@ -3,37 +3,56 @@ package confutil
 import (
 	"errors"
 	"fmt"
+	"io"
 	"log"
+	"os"
 	"reflect"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/Unknwon/goconfig"
 )
 
 //ini struct
-//implement the Config interface
 type IniFile struct {
-	*goconfig.ConfigFile
+	//*goconfig.ConfigFile
+	path string
 }
 
-func (this *IniFile) Set(section, key string, value interface{}) {
-	//not support
+//load file
+func (f *IniFile) LoadIniFile(path string) (*KeyValue, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	data, err := io.ReadAll(file)
+	if err != nil {
+		return nil, err
+	}
+
+	info, err := file.Stat()
+	if err != nil {
+		return nil, err
+	}
+
+	return &KeyValue{
+		Key: info.Name(),
+		Format: f.format(info.Name()),
+		Value: data,
+	}, nil
 }
 
-//load function
-func loadIniFile(path string) (cfg Config, err error) {
-	//load file
-	file, err := goconfig.LoadConfigFile(path)
-	config := new(IniFile)
-	config.ConfigFile = file
-	return config, err
+func (f *IniFile) format(name string) string {
+	if p := strings.Split(name, "."); len(p) > 1 {
+		return p[len(p)-1]
+	}
+	return ""
 }
 
 //GetSectionObject implemented
 //obj must a pointer
-func (ini *IniFile) GetSectionObject(section string, obj interface{}) error {
+func (f *IniFile) GetSectionObject(section string, obj interface{}) error {
 	if ret, err := g_cfg.GetSection(section); err != nil {
 		log.Printf("Conf,err:%v", err)
 		return err
