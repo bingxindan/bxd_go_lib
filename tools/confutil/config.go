@@ -63,7 +63,6 @@ func InitConfig() {
 	log.Printf("CONF INIT,path:%s", *configPath)
 	//load config from path
 	if g_cfg, err = Load(*configPath); err != nil {
-		g_cfg = nil
 		log.Printf("Conf,err%v", err)
 	}
 }
