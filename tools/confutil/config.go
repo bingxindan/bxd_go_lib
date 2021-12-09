@@ -47,9 +47,9 @@ var (
 //include 3 load module(ini,yaml,any),any is a plugin module,support second develop
 func InitConfig() {
 	//check if config has inited
-	if g_cfg != nil {
+	/*if g_cfg != nil {
 		return
-	}
+	}*/
 
 	//get the path args
 	configPath := flagutil.GetConfig()
