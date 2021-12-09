@@ -27,8 +27,6 @@ type Config interface {
 	GetSectionList() []string
 	//get object value by section
 	GetSectionObject(section string, obj interface{}) error
-	//set value by section and key when need
-	Set(section, key string, value interface{})
 }
 
 var (
@@ -39,9 +37,6 @@ var (
 		sync.RWMutex
 		cache map[string]Config
 	}{cache: make(map[string]Config, 0)}
-	//when you don't want to use ini or yaml file source,you need the "any" pattern
-	//the "any" pattern can customize the data source by register a plugin
-	anyFileMap = make(map[string]func() (Config, error), 0)
 	//global config
 	g_cfg Config
 	//config path prefix if your config path is not a absolute path
@@ -104,28 +99,11 @@ func SetConfPathPrefix(fullPathPrefix string) {
 	}
 }
 
-//config set function
-func Set(section, key string, value interface{}) {
-	InitConfig()
-	if g_cfg == nil {
-		log.Printf("Conf,NOT_FOUND[sec:%s,key:%s]", section, key)
-		return
-	}
-	g_cfg.Set(section, key, value)
-}
-
 //file load function
 //include 3 load module(ini,yaml,any),any module support plugins
 //by use flag -c=xxx,and you need provide a xxx.go which implement the
 //Config interface and register the load function in plugin.go
 func Load(path string) (cfg Config, err error) {
-	//load any module
-	//path is not a valid path
-	if !strings.Contains(path, "/") {
-		fn := anyFileMap[path]
-		cfg, err = fn()
-		return
-	}
 	//load ini or yaml
 	//path must has more than 3 bytes
 	if len([]byte(path)) < 4 {

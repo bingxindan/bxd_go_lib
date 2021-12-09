@@ -18,17 +18,13 @@ type IniFile struct {
 	*goconfig.ConfigFile
 }
 
-func (this *IniFile) Set(section, key string, value interface{}) {
-	//not support
-}
-
 //load function
-func loadIniFile(path string) (cfg Config, err error) {
+func loadIniFile(path string) (cfg *IniFile, err error) {
 	//load file
 	file, err := goconfig.LoadConfigFile(path)
-	config := new(IniFile)
-	config.ConfigFile = file
-	return config, err
+	cfg = new(IniFile)
+	cfg.ConfigFile = file
+	return cfg, err
 }
 
 //GetSectionObject implemented
