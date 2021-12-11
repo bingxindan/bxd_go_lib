@@ -18,6 +18,12 @@ var usr3 = flag.String("usr3", "", "user defined flag -usr3")
 var usr4 = flag.String("usr4", "", "user defined flag -usr4")
 var usr5 = flag.String("usr5", "", "user defined flag -usr5")
 
+func init() {
+	if !flag.Parsed() {
+		flag.Parse()
+	}
+}
+
 func GetSignal() *string {
 	return signal
 }
