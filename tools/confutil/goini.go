@@ -3,6 +3,7 @@ package confutil
 import (
 	"errors"
 	"fmt"
+	"github.com/Unknwon/goconfig"
 	"io"
 	"log"
 	"os"
@@ -14,11 +15,11 @@ import (
 
 //ini struct
 type IniFile struct {
-	//*goconfig.ConfigFile
-	path string
+	*goconfig.ConfigFile
+	//path string
 }
 
-//load file
+/*//load file
 func (f *IniFile) LoadIniFile(path string) (*KeyValue, error) {
 	file, err := os.Open(path)
 	if err != nil {
@@ -48,6 +49,15 @@ func (f *IniFile) format(name string) string {
 		return p[len(p)-1]
 	}
 	return ""
+}*/
+
+//load function
+func loadIniFile(path string) (cfg *IniFile, err error) {
+	//load file
+	file, err := goconfig.LoadConfigFile(path)
+	cfg = new(IniFile)
+	cfg.ConfigFile = file
+	return cfg, err
 }
 
 //GetSectionObject implemented

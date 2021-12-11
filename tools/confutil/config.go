@@ -27,8 +27,6 @@ type Config interface {
 	GetSectionList() []string
 	//get object value by section
 	GetSectionObject(section string, obj interface{}) error
-	//set value by section and key when need
-	Set(section, key string, value interface{})
 }
 
 var (
@@ -39,9 +37,6 @@ var (
 		sync.RWMutex
 		cache map[string]Config
 	}{cache: make(map[string]Config, 0)}
-	//when you don't want to use ini or yaml file source,you need the "any" pattern
-	//the "any" pattern can customize the data source by register a plugin
-	anyFileMap = make(map[string]func() (Config, error), 0)
 	//global config
 	g_cfg Config
 	//config path prefix if your config path is not a absolute path
@@ -51,11 +46,6 @@ var (
 //config init function
 //include 3 load module(ini,yaml,any),any is a plugin module,support second develop
 func InitConfig() {
-	//check if config has inited
-	if g_cfg != nil {
-		return
-	}
-
 	//get the path args
 	configPath := flagutil.GetConfig()
 	var err error
@@ -68,7 +58,6 @@ func InitConfig() {
 	log.Printf("CONF INIT,path:%s", *configPath)
 	//load config from path
 	if g_cfg, err = Load(*configPath); err != nil {
-		g_cfg = nil
 		log.Printf("Conf,err%v", err)
 	}
 }
@@ -102,16 +91,6 @@ func SetConfPathPrefix(fullPathPrefix string) {
 	if len(fullPathPrefix) != 0 {
 		USER_CONF_PATH = fullPathPrefix
 	}
-}
-
-//config set function
-func Set(section, key string, value interface{}) {
-	InitConfig()
-	if g_cfg == nil {
-		log.Printf("Conf,NOT_FOUND[sec:%s,key:%s]", section, key)
-		return
-	}
-	g_cfg.Set(section, key, value)
 }
 
 //file load function
