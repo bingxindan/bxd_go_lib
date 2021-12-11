@@ -135,9 +135,9 @@ func Load(path string) (cfg Config, err error) {
 				config_cache.cache[path] = cfg
 			}
 		} else {
-			/*if cfg, err = loadIniFile(path); err == nil {
+			if cfg, err = loadIniFile(path); err == nil {
 				config_cache.cache[path] = cfg
-			}*/
+			}
 		}
 		config_cache.Unlock()
 	}
