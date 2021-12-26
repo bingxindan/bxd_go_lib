@@ -15,6 +15,7 @@ require (
 	github.com/smallnest/rpcx v1.6.11
 	github.com/smartystreets/goconvey v1.7.2 // indirect
 	github.com/spf13/cast v1.4.1
+	github.com/tidwall/pretty v1.2.0 // indirect
 	go.uber.org/zap v1.19.1
 	gopkg.in/yaml.v2 v2.4.0
 	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb
