@@ -17,7 +17,7 @@ type INode interface {
 	// GetId获取id
 	GetId() int
 	// GetFatherId 获取父id
-	GetFatherId() int
+	GetParentId() int
 	// GetData 获取附加数据
 	GetData() interface{}
 	// IsRoot 判断当前节点是否是顶层根节点
@@ -78,7 +78,7 @@ func recursiveTree(tree *Tree, nodes []INode) {
 		if v.IsRoot() {
 			continue
 		}
-		if data.GetId() == v.GetFatherId() {
+		if data.GetId() == v.GetParentId() {
 			childTree := &Tree{
 				Title: v.GetTitle(),
 				Data: v.GetData(),
