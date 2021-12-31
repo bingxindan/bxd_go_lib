@@ -72,7 +72,10 @@ func CustomTree(nodes []INode) (trees []Tree) {
 // nodes 递归的节点
 // selectedNodes 选中的节点
 func recursiveTree(tree *Tree, nodes []INode) {
-	data := tree.Data.(INode)
+	var (
+		null = make([]Tree, 0)
+		data = tree.Data.(INode)
+	)
 
 	for _, v := range nodes {
 		if v.IsRoot() {
@@ -87,6 +90,8 @@ func recursiveTree(tree *Tree, nodes []INode) {
 			// 递归之后，根据子节确认是否是叶子节点
 			childTree.Leaf = len(childTree.Children) == 0
 			tree.Children = append(tree.Children, *childTree)
+		} else {
+			tree.Children = null
 		}
 	}
 }
