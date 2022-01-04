@@ -1,6 +1,7 @@
 package helper
 
 import (
+	"math/rand"
 	"strconv"
 	"time"
 )
@@ -67,4 +68,20 @@ func ConvertStrToTimestamp(timeStr string) int64 {
 	theTime, _ := time.ParseInLocation(timeLayout, timeStr, loc) //使用模板在对应时区转化为time.time类型
 	toTime := theTime.Unix()                                     //转化为时间戳 类型是int64
 	return toTime
+}
+
+// @Desc 生成随机字符串
+// @Date 2022-01-05
+// @Param
+// @Return
+// @Author zhangming
+func GetRandomString(length int) string {
+	str := "0123456789abcdefghijklmnopqrstuvwxyz"
+	bytes := []byte(str)
+	result := []byte{}
+	r := rand.New(rand.NewSource(time.Now().UnixNano()))
+	for i := 0; i < length; i++ {
+		result = append(result, bytes[r.Intn(len(bytes))])
+	}
+	return string(result)
 }
