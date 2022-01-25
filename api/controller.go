@@ -1,9 +1,9 @@
 package api
 
 import (
+	"github.com/bingxindan/bxd_go_lib/bxd_errors"
 	"github.com/bingxindan/bxd_go_lib/gokit/network"
 	"github.com/bingxindan/bxd_go_lib/logger"
-	"github.com/bingxindan/bxd_go_lib/tools/bxd_errors"
 	"github.com/gin-gonic/gin"
 )
 
