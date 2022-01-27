@@ -2,12 +2,12 @@ package trees
 
 // Tree 统一定义菜单树的数据结构，也可以自定义添加其他字段
 type Tree struct {
-	Title string      `json:"title"` //节点名字
-	Data  interface{} `json:"data"`  //自定义对象
-	Leaf  bool        `json:"leaf"`  //叶子节点
-	//Selected        bool        `json:"checked"`          //选中
-	//PartialSelected bool        `json:"partial_selected"` //部分选中
-	Children []Tree `json:"children"` //子节点
+	Title    string      `json:"title"`    //节点名字
+	Data     interface{} `json:"data"`     //自定义对象
+	Leaf     bool        `json:"leaf"`     //叶子节点
+	Sort     int         `json:"sort"`     //排序
+	IsGather int         `json:"isGather"` // 此条数据使用排序
+	Children []Tree      `json:"children"` //子节点
 }
 
 // ConvertToINodeArray 其他的结构体想要生成菜单树，直接实现这个接口
@@ -22,6 +22,10 @@ type INode interface {
 	GetData() interface{}
 	// IsRoot 判断当前节点是否是顶层根节点
 	IsRoot() bool
+	// 排序
+	GetSort() int
+	// 此条数据使用排序
+	GetIsGather() int
 }
 
 type INodes []INode
@@ -82,8 +86,10 @@ func recursiveTree(tree *Tree, nodes []INode) {
 		}
 		if data.GetId() == v.GetParentId() {
 			childTree := &Tree{
-				Title: v.GetTitle(),
-				Data:  v.GetData(),
+				Title:    v.GetTitle(),
+				Data:     v.GetData(),
+				Sort:     v.GetSort(),
+				IsGather: v.GetIsGather(),
 			}
 			recursiveTree(childTree, nodes)
 			// 递归之后，根据子节确认是否是叶子节点
@@ -93,6 +99,25 @@ func recursiveTree(tree *Tree, nodes []INode) {
 				childTree.Leaf = true
 			}
 			tree.Children = append(tree.Children, *childTree)
+			// 排序
+			sortData(tree.Children)
+		}
+	}
+}
+
+// 重新排序
+func sortData(data []Tree) {
+	for i := 0; i < len(data)-1; i++ {
+		if data[i].IsGather != 1 {
+			continue
+		}
+		for j := 0; j < len(data)-1-i; j++ {
+			if data[j].IsGather != 1 {
+				continue
+			}
+			if data[j].Sort > data[j+1].Sort {
+				data[j], data[j+1] = data[j+1], data[j]
+			}
 		}
 	}
 }

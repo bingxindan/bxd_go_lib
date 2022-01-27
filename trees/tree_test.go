@@ -11,6 +11,8 @@ import (
 type SystemMenu struct {
 	CollectionId int `json:"collectionId"`
 	ParentId     int `json:"parentId"`
+	ContentSort  int `json:"contentSort"`
+	IsGather     int `json:"isGather"`
 }
 
 // region 实现ITree 所有接口
@@ -35,6 +37,14 @@ func (s SystemMenu) IsRoot() bool {
 	return s.ParentId == 0 || s.ParentId == s.CollectionId
 }
 
+func (s SystemMenu) GetSort() int {
+	return s.ContentSort
+}
+
+func (s SystemMenu) GetIsGather() int {
+	return s.IsGather
+}
+
 // endregion
 
 type SystemMenus []SystemMenu
@@ -51,21 +61,29 @@ func TestGenerateTree(t *testing.T) {
 	// 模拟获取数据库中所有菜单，在其它所有的查询中，也是首先将数据库中所有数据查询出来放到数组中，
 	// 后面的遍历递归，都在这个 allMenu中进行，而不是在数据库中进行递归查询，减小数据库压力。
 	allMenu := []SystemMenu{
-		{CollectionId: 1, ParentId: 0},
-		{CollectionId: 2, ParentId: 0},
+		{CollectionId: 1, ParentId: 0, ContentSort: 1},
+		{CollectionId: 2, ParentId: 0, ContentSort: 1},
 
-		{CollectionId: 3, ParentId: 1},
-		{CollectionId: 4, ParentId: 1},
+		{CollectionId: 3, ParentId: 1, ContentSort: 1},
+		{CollectionId: 4, ParentId: 1, ContentSort: 1},
 
-		{CollectionId: 5, ParentId: 2},
-		{CollectionId: 6, ParentId: 3},
-		{CollectionId: 7, ParentId: 3},
+		{CollectionId: 5, ParentId: 2, ContentSort: 1},
+		{CollectionId: 6, ParentId: 3, ContentSort: 1},
+		{CollectionId: 7, ParentId: 3, ContentSort: 3},
+		{CollectionId: 8, ParentId: 3, ContentSort: 2},
 	}
 
-	fmt.Printf("all: %+v\n", allMenu)
+	/*fmt.Printf("all: %+v\n", allMenu)
+
+	parents := make(map[int][]SystemMenu, 0)
+
+	for _, v := range allMenu {
+		parents[v.ParentId] = append(parents[v.ParentId], v)
+	}*/
 
 	// 生成完全树
 	resp := CustomTree(SystemMenus.ConvertToINodeArray(allMenu))
+
 	bytes, _ := json.MarshalIndent(resp, "", "\t")
 	fmt.Println(string(pretty.Color(pretty.PrettyOptions(bytes, pretty.DefaultOptions), nil)))
 }
