@@ -110,13 +110,7 @@ func recursiveTree(tree *Tree, nodes []INode) {
 // 重新排序
 func sortData(data []Tree) []Tree {
 	for i := 0; i < len(data)-1; i++ {
-		if data[i].IsGather != 1 {
-			continue
-		}
 		for j := 0; j < len(data)-1-i; j++ {
-			if data[j].IsGather != 1 {
-				continue
-			}
 			if data[j].Sort > data[j+1].Sort {
 				data[j], data[j+1] = data[j+1], data[j]
 			}
