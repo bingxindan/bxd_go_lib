@@ -102,13 +102,13 @@ func recursiveTree(tree *Tree, nodes []INode) {
 			}
 			tree.Children = append(tree.Children, *childTree)
 			// 排序
-			sortData(tree.Children)
+			tree.Children = sortData(tree.Children)
 		}
 	}
 }
 
 // 重新排序
-func sortData(data []Tree) {
+func sortData(data []Tree) []Tree {
 	for i := 0; i < len(data)-1; i++ {
 		if data[i].IsGather != 1 {
 			continue
@@ -122,4 +122,5 @@ func sortData(data []Tree) {
 			}
 		}
 	}
+	return data
 }
