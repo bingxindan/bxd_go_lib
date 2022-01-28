@@ -58,8 +58,10 @@ func CustomTree(nodes []INode) (trees []Tree) {
 
 	for _, v := range roots {
 		childTree := &Tree{
-			Title: v.GetTitle(),
-			Data:  v.GetData(),
+			Title:    v.GetTitle(),
+			Data:     v.GetData(),
+			Sort:     v.GetSort(),
+			IsGather: v.GetIsGather(),
 		}
 		// 递归
 		recursiveTree(childTree, childes)

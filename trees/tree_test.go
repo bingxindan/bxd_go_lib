@@ -61,16 +61,16 @@ func TestGenerateTree(t *testing.T) {
 	// 模拟获取数据库中所有菜单，在其它所有的查询中，也是首先将数据库中所有数据查询出来放到数组中，
 	// 后面的遍历递归，都在这个 allMenu中进行，而不是在数据库中进行递归查询，减小数据库压力。
 	allMenu := []SystemMenu{
-		{CollectionId: 1, ParentId: 0, ContentSort: 1},
-		{CollectionId: 2, ParentId: 0, ContentSort: 1},
+		{CollectionId: 1, ParentId: 0, ContentSort: 1, IsGather: 1},
+		{CollectionId: 2, ParentId: 0, ContentSort: 1, IsGather: 1},
 
-		{CollectionId: 3, ParentId: 1, ContentSort: 1},
-		{CollectionId: 4, ParentId: 1, ContentSort: 1},
+		{CollectionId: 3, ParentId: 1, ContentSort: 1, IsGather: 1},
+		{CollectionId: 4, ParentId: 1, ContentSort: 1, IsGather: 1},
 
-		{CollectionId: 5, ParentId: 2, ContentSort: 1},
-		{CollectionId: 6, ParentId: 3, ContentSort: 1},
-		{CollectionId: 7, ParentId: 3, ContentSort: 3},
-		{CollectionId: 8, ParentId: 3, ContentSort: 2},
+		{CollectionId: 5, ParentId: 2, ContentSort: 1, IsGather: 1},
+		{CollectionId: 6, ParentId: 3, ContentSort: 1, IsGather: 1},
+		{CollectionId: 7, ParentId: 3, ContentSort: 3, IsGather: 1},
+		{CollectionId: 8, ParentId: 3, ContentSort: 2, IsGather: 1},
 	}
 
 	/*fmt.Printf("all: %+v\n", allMenu)
