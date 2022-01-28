@@ -1,5 +1,7 @@
 package trees
 
+import "fmt"
+
 // Tree 统一定义菜单树的数据结构，也可以自定义添加其他字段
 type Tree struct {
 	Title    string      `json:"title"`    //节点名字
@@ -109,6 +111,7 @@ func recursiveTree(tree *Tree, nodes []INode) {
 
 // 重新排序
 func sortData(data []Tree) []Tree {
+	fmt.Printf("1111: %+v\n\n", data)
 	for i := 0; i < len(data)-1; i++ {
 		for j := 0; j < len(data)-1-i; j++ {
 			if data[j].Sort > data[j+1].Sort {

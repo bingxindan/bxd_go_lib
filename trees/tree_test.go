@@ -68,9 +68,14 @@ func TestGenerateTree(t *testing.T) {
 		{CollectionId: 4, ParentId: 1, ContentSort: 1, IsGather: 1},
 
 		{CollectionId: 5, ParentId: 2, ContentSort: 1, IsGather: 1},
-		{CollectionId: 6, ParentId: 3, ContentSort: 1, IsGather: 1},
-		{CollectionId: 7, ParentId: 3, ContentSort: 3, IsGather: 1},
-		{CollectionId: 8, ParentId: 3, ContentSort: 2, IsGather: 1},
+
+		{CollectionId: 6, ParentId: 3, ContentSort: 5, IsGather: 1},
+		{CollectionId: 7, ParentId: 3, ContentSort: 0, IsGather: 1},
+		{CollectionId: 8, ParentId: 3, ContentSort: 1, IsGather: 1},
+		{CollectionId: 9, ParentId: 3, ContentSort: 3, IsGather: 1},
+		{CollectionId: 10, ParentId: 3, ContentSort: 6, IsGather: 1},
+		{CollectionId: 11, ParentId: 3, ContentSort: 4, IsGather: 1},
+		{CollectionId: 12, ParentId: 3, ContentSort: 2, IsGather: 1},
 	}
 
 	/*fmt.Printf("all: %+v\n", allMenu)
