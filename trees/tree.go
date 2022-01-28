@@ -1,7 +1,5 @@
 package trees
 
-import "fmt"
-
 // Tree 统一定义菜单树的数据结构，也可以自定义添加其他字段
 type Tree struct {
 	Title    string      `json:"title"`    //节点名字
@@ -70,6 +68,7 @@ func CustomTree(nodes []INode) (trees []Tree) {
 		// 递归之后，根据子节点确认是否是叶子节点
 		childTree.Leaf = len(childTree.Children) == 0
 		trees = append(trees, *childTree)
+		trees = sortData(trees)
 	}
 
 	return
@@ -102,18 +101,23 @@ func recursiveTree(tree *Tree, nodes []INode) {
 				childTree.Children = make([]Tree, 0)
 				childTree.Leaf = true
 			}
-			tree.Children = append(tree.Children, *childTree)
 			// 排序
-			tree.Children = sortData(tree.Children)
+			childTree.Children = sortData(childTree.Children)
+			tree.Children = append(tree.Children, *childTree)
 		}
 	}
 }
 
 // 重新排序
 func sortData(data []Tree) []Tree {
-	fmt.Printf("1111: %+v\n\n", data)
 	for i := 0; i < len(data)-1; i++ {
+		if data[i].IsGather != 1 {
+			continue
+		}
 		for j := 0; j < len(data)-1-i; j++ {
+			if data[j].IsGather != 1 {
+				continue
+			}
 			if data[j].Sort > data[j+1].Sort {
 				data[j], data[j+1] = data[j+1], data[j]
 			}
