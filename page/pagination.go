@@ -14,9 +14,6 @@ type Pagination struct {
 // Parse pagination from gin ctx
 func (p *Pagination) Parse(ctx *gin.Context) {
 	p.Init()
-	if err := ctx.ShouldBind(p); err != nil {
-		return
-	}
 	p.Page = max(1, p.Page)
 	p.PageSize = max(1, p.PageSize)
 	p.Offset = (p.Page - 1) * p.PageSize
