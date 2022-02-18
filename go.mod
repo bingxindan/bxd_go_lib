@@ -11,6 +11,7 @@ require (
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5
 	github.com/satori/go.uuid v1.2.0
+	github.com/segmentio/kafka-go v0.4.28
 	github.com/sirupsen/logrus v1.4.2
 	github.com/smallnest/rpcx v1.6.11
 	github.com/smartystreets/goconvey v1.7.2 // indirect
