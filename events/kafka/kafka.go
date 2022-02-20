@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/bingxindan/bxd_go_lib/events/event"
 	"github.com/bingxindan/bxd_go_lib/logger"
-	"github.com/segmentio/kafka-go"
+	kafkaClient "github.com/segmentio/kafka-go"
 )
 
 var (
@@ -32,12 +32,12 @@ func NewMessage(key string, value []byte) event.Event {
 }
 
 type kafkaSender struct {
-	writer *kafka.Writer
+	writer *kafkaClient.Writer
 	topic  string
 }
 
 func (s *kafkaSender) Send(ctx context.Context, message event.Event) error {
-	err := s.writer.WriteMessages(ctx, kafka.Message{
+	err := s.writer.WriteMessages(ctx, kafkaClient.Message{
 		Key:   []byte(message.Key()),
 		Value: message.Value(),
 	})
@@ -56,16 +56,16 @@ func (s *kafkaSender) Close() error {
 }
 
 func NewKafkaSender(address []string, topic string) (event.Sender, error) {
-	w := &kafka.Writer{
+	w := &kafkaClient.Writer{
 		Topic:    topic,
-		Addr:     kafka.TCP(address...),
-		Balancer: &kafka.LeastBytes{},
+		Addr:     kafkaClient.TCP(address...),
+		Balancer: &kafkaClient.LeastBytes{},
 	}
 	return &kafkaSender{writer: w, topic: topic}, nil
 }
 
 type kafkaReceiver struct {
-	reader *kafka.Reader
+	reader *kafkaClient.Reader
 	topic  string
 }
 
@@ -99,11 +99,11 @@ func (k *kafkaReceiver) Close() error {
 	return nil
 }
 
-func NewKafkaReceiver(address []string, topic string) (event.Receiver, error) {
-	r := kafka.NewReader(kafka.ReaderConfig{
+func NewKafkaReceiver(address []string, topic, groupId string) (event.Receiver, error) {
+	r := kafkaClient.NewReader(kafkaClient.ReaderConfig{
 		Brokers:  address,
-		GroupID:  "group-a",
 		Topic:    topic,
+		GroupID:  groupId,
 		MinBytes: 10e3,
 		MaxBytes: 10e6,
 	})

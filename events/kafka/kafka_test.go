@@ -4,38 +4,34 @@ import (
 	"context"
 	"fmt"
 	"github.com/bingxindan/bxd_go_lib/events/event"
-	"os"
-	"os/signal"
-	"syscall"
+	"github.com/bingxindan/bxd_go_lib/logger"
 	"testing"
 )
 
 func TestReceive(t *testing.T) {
-	sigs := make(chan os.Signal, 1)
-	signal.Notify(sigs, syscall.SIGHUP, syscall.SIGINT, syscall.SIGTERM, syscall.SIGQUIT)
-	receiver, err := NewKafkaReceiver([]string{"localhost:9092"}, "kratos")
+	receiver, err := NewKafkaReceiver([]string{"192.168.31.156:29092"}, "topic", "content")
 	if err != nil {
 		panic(err)
 	}
 	receive(receiver)
-
-	<-sigs
-	_ = receiver.Close()
+	defer receiver.Close()
 }
 
 func receive(receiver event.Receiver) {
 	fmt.Println("start receiver")
 	err := receiver.Receive(context.Background(), func(ctx context.Context, msg event.Event) error {
 		fmt.Printf("key:%s, value:%s\n", msg.Key(), msg.Value())
+		logger.Ix(ctx, "kafka.receive", "key:%s, value:%s\n", msg.Key(), msg.Value())
 		return nil
 	})
+	fmt.Printf("receive: %+v\n", err)
 	if err != nil {
 		return
 	}
 }
 
 func TestSend(t *testing.T) {
-	sender, err := NewKafkaSender([]string{"localhost:9092"}, "kratos")
+	sender, err := NewKafkaSender([]string{"192.168.31.156:29092"}, "topic")
 	if err != nil {
 		panic(err)
 	}
@@ -48,7 +44,7 @@ func TestSend(t *testing.T) {
 }
 
 func send(sender event.Sender) {
-	msg := NewMessage("kratos", []byte("hello world"))
+	msg := NewMessage("topic", []byte("hello world"))
 	err := sender.Send(context.Background(), msg)
 	if err != nil {
 		panic(err)
