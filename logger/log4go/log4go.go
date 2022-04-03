@@ -313,7 +313,7 @@ func (log Logger) Log(lvl Level, source, message string) {
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////
-//	Added by xueersi
+//	Added by bxd
 //
 // Send a log message with manual level, source, and message.
 func (log Logger) LogTrace(lvl Level, source, message string, traceMeta *map[string]string) {
