@@ -50,10 +50,7 @@ type FileLogTraceWriter struct {
 
 // This is the FileLog2Writer's output method
 func (w *FileLogTraceWriter) LogWrite(rec *LogRecord) {
-	select {
-	case w.rec <- rec:
-	default:
-	}
+	w.rec <- rec
 }
 
 func (w *FileLogTraceWriter) Close() {

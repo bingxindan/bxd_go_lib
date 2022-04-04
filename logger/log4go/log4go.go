@@ -356,9 +356,7 @@ func (log Logger) LogTrace(lvl Level, source, message string, traceMeta *map[str
 }
 
 func (log Logger) LogTraceMap(lvl Level, source, message string, traceFields map[string]string) {
-	// TODO-暂时先不跳过，都打印
-	//skip := true
-	skip := false
+	skip := true
 
 	// Determine if any logging will be done
 	for _, filt := range log {
