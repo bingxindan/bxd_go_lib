@@ -2,6 +2,7 @@ package discovery
 
 import (
 	"context"
+	"encoding/json"
 	"github.com/bingxindan/bxd_go_lib/logger"
 	"time"
 
@@ -38,7 +39,11 @@ func NewResolver(etcdAddrs []string) *Resolver {
 	}
 }
 
-func StartResolver(etcdAddrs []string) (string, error) {
+func StartResolver(etcdAddrs []string, key string) (Server, error) {
+	var (
+		node = Server{}
+	)
+
 	cli, err := clientv3.New(clientv3.Config{
 		Endpoints:   etcdAddrs,
 		DialTimeout: 5 * time.Second,
@@ -48,17 +53,22 @@ func StartResolver(etcdAddrs []string) (string, error) {
 	}
 	defer cli.Close()
 
-	testKey := "/user"
-	res, err := cli.Get(context.Background(), testKey, clientv3.WithPrefix())
+	res, err := cli.Get(context.Background(), key, clientv3.WithPrefix())
 	if err != nil {
 		logger.Ex(context.Background(), "get", "Get failed: %+v", err)
-		return "", err
+		return node, err
 	}
 
 	kvs := res.Kvs
-	infoRes := string(kvs[0].Value)
+	value := string(kvs[0].Value)
 
-	return infoRes, nil
+	err = json.Unmarshal([]byte(value), &node)
+	if err != nil {
+		logger.Ex(context.Background(), "get", "Get failed: %+v", err)
+		return node, err
+	}
+
+	return node, nil
 }
 
 // Scheme returns the scheme supported by this resolver.
