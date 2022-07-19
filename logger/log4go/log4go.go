@@ -360,14 +360,12 @@ func (log Logger) LogTraceMap(lvl Level, source, message string, traceFields map
 
 	// Determine if any logging will be done
 	for _, filt := range log {
-		fmt.Printf("11111, lvl: %+v, level: %+v\n", lvl, filt.Level)
 		if lvl >= filt.Level {
 			skip = false
 			break
 		}
 	}
 	if skip {
-		fmt.Printf("skip: %+v\n", skip)
 		return
 	}
 
@@ -383,11 +381,9 @@ func (log Logger) LogTraceMap(lvl Level, source, message string, traceFields map
 
 	// Dispatch the logs
 	for _, filt := range log {
-		fmt.Printf("222222, lvl: %+v, level: %+v\n", lvl, filt.Level)
 		if lvl < filt.Level {
 			continue
 		}
-		fmt.Printf("333333, rec: %+v\n", rec)
 		filt.LogWrite(rec)
 	}
 }
