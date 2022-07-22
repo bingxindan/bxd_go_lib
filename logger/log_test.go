@@ -26,13 +26,21 @@ func TestLogger(m *testing.T) {
 	ctx := context.WithValue(context.Background(), "start", time.Now())
 	ctx = context.WithValue(ctx, logtrace.GetMetadataKey(), logtrace.GenLogTraceMetadata())
 
-	Ix(ctx, "tag", "Iaa: %+v", 2222)
-
 	time.Sleep(5 * time.Second)
 
 	for i := 0; i < 1000; i++ {
-		Ix(ctx, "tag", "Iaa: %+v", 3333)
+		Ix(ctx, "tag", "Iaa: %+v", PrintlnTxt())
 	}
 
 	time.Sleep(10 * time.Second)
+}
+
+func PrintlnTxt() string {
+	a := "aaaaa我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心" +
+		"我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心" +
+		"我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心" +
+		"我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心" +
+		"我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心" +
+		"我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心我的中国心"
+	return a
 }

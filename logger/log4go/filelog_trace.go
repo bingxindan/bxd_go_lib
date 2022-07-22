@@ -105,6 +105,9 @@ func NewFileLogTraceWriter(fname string, rotate bool) *FileLogTraceWriter {
 					w.rec = make(chan *LogRecord, LogBufferLength)
 					continue
 				}
+
+				fmt.Printf("121212121212121212: %+v\n", rec)
+
 				now := time.Now()
 				if (w.maxlines > 0 && w.maxlines_curlines >= w.maxlines) ||
 					(w.maxsize > 0 && w.maxsize_cursize >= w.maxsize) ||
