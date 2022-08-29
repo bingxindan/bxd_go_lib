@@ -7,9 +7,11 @@ require (
 	github.com/Unknwon/goconfig v1.0.0
 	github.com/gin-gonic/gin v1.7.2-0.20211121134503-57ede9c95abb
 	github.com/go-errors/errors v1.0.1
+	github.com/go-kratos/kratos/v2 v2.4.1 // indirect
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/go-xorm/xorm v0.7.9
 	github.com/golang/groupcache v0.0.0-20210331224755-41bb18bfe9da // indirect
+	github.com/golang/protobuf v1.5.2 // indirect
 	github.com/json-iterator/go v1.1.12
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5
@@ -23,7 +25,7 @@ require (
 	go.etcd.io/etcd/api/v3 v3.5.0
 	go.etcd.io/etcd/client/v3 v3.5.0
 	go.uber.org/zap v1.19.1
-	google.golang.org/grpc v1.38.0
+	google.golang.org/grpc v1.46.2
 	gopkg.in/yaml.v2 v2.4.0
 	xorm.io/core v0.7.2-0.20190928055935-90aeac8d08eb
 )

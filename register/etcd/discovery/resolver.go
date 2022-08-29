@@ -3,6 +3,7 @@ package discovery
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/bingxindan/bxd_go_lib/logger"
 	"time"
 
@@ -39,13 +40,11 @@ func NewResolver(etcdAddrs []string) *Resolver {
 	}
 }
 
-func StartResolver(etcdAddrs []string, key string) (Server, error) {
-	var (
-		node = Server{}
-	)
+func (r *Resolver) StartResolver(ctx context.Context, reso *Resolver) (Server, error) {
+	node := Server{}
 
 	cli, err := clientv3.New(clientv3.Config{
-		Endpoints:   etcdAddrs,
+		Endpoints:   reso.EtcdAddrs,
 		DialTimeout: 5 * time.Second,
 	})
 	if err != nil {
@@ -53,9 +52,10 @@ func StartResolver(etcdAddrs []string, key string) (Server, error) {
 	}
 	defer cli.Close()
 
-	res, err := cli.Get(context.Background(), key, clientv3.WithPrefix())
+	res, err := cli.Get(ctx, "/hello", clientv3.WithPrefix())
+	fmt.Printf("aaaaa: %+v\n", res)
 	if err != nil {
-		logger.Ex(context.Background(), "get", "Get failed: %+v", err)
+		logger.Ex(ctx, "get", "Get failed: %+v", err)
 		return node, err
 	}
 
@@ -64,7 +64,7 @@ func StartResolver(etcdAddrs []string, key string) (Server, error) {
 
 	err = json.Unmarshal([]byte(value), &node)
 	if err != nil {
-		logger.Ex(context.Background(), "get", "Get failed: %+v", err)
+		logger.Ex(ctx, "get", "Get failed: %+v", err)
 		return node, err
 	}
 

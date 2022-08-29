@@ -86,6 +86,7 @@ func NewFileLogTraceWriter(fname string, rotate bool) *FileLogTraceWriter {
 	}
 
 	// open the file for the first time
+	// 首次打开该文件
 	if err := w.intRotate(); err != nil {
 		fmt.Fprintf(os.Stderr, "FileLogTraceWriter(%q): %s\n", w.filename, err)
 		return nil
@@ -407,6 +408,7 @@ func (w *FileLogTraceWriter) intRotate() error {
 		w.file.Close()
 	}
 	// If we are keeping log files, move it to the next available number
+	// 如果我们要保留日志文件，就把它移到下一个可用的号码上。
 	if w.rotate {
 		_, err := os.Lstat(w.filename)
 		if err == nil { // file exists
