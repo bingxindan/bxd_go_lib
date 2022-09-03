@@ -15,6 +15,7 @@ require (
 	github.com/json-iterator/go v1.1.12
 	github.com/kardianos/osext v0.0.0-20190222173326-2bc1f35cddc0
 	github.com/petermattis/goid v0.0.0-20180202154549-b0b1615b78e5
+	github.com/pkg/errors v0.9.1 // indirect
 	github.com/satori/go.uuid v1.2.0
 	//github.com/segmentio/kafka-go v0.4.28
 	github.com/sirupsen/logrus v1.7.0

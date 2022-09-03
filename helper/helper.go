@@ -4,9 +4,12 @@ import (
 	"context"
 	"github.com/bingxindan/bxd_go_lib/logger"
 	"github.com/pkg/errors"
+	"io"
 	"math/rand"
 	"net"
+	"net/http"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -110,4 +113,30 @@ func GetSrvIP(ctx context.Context) (ip string, err error) {
 	}
 
 	return "", errors.New("服务器IP获取失败！")
+}
+
+func GetExternalIP() (string, error) {
+	response, err := http.Get("http://ip.cip.cc")
+	defer response.Body.Close()
+	if err != nil {
+		return "", errors.WithMessage(err, "GetExternalIP.fail")
+	}
+
+	var ip = ""
+
+	// 返回一个纯净的IP地址
+	for {
+		tmp := make([]byte, 32)
+		n, err := response.Body.Read(tmp)
+		if err != nil {
+			if err != io.EOF {
+				return "", errors.WithMessage(err, "GetExternalIP.response.Body.Read.err")
+			}
+			ip += string(tmp[:n])
+			break
+		}
+		ip += string(tmp[:n])
+	}
+
+	return strings.TrimSpace(ip), nil
 }
