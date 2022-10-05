@@ -1,14 +1,43 @@
 server:
   http:
-    addr: 0.0.0.0:8000
+    network: tcp
+    addr: 0.0.0.0:10088
     timeout: 1s
   grpc:
-    addr: 0.0.0.0:9000
+    network: tcp
+    addr: 0.0.0.0:10089
     timeout: 1s
+  fast:
+    network: tcp4
+    addr: 0.0.0.0:10881
+  metrics:
+    network: tcp
+    addr: 0.0.0.0:10087
+registry:
+  name: jz_rpc
+  addrs: 101.200.38.157:2379
+  version: 1.0.0
+  weight: 2
+  rpc_port: 10089
+  rpc_addr: 101.200.38.157:10089
 data:
-  database:
-    driver: mysql
-    source: root:root@tcp(127.0.0.1:3306)/test
+  mysql:
+    #采集MySQL日志
+    show_sql: true
+    show_exec_time: true
+    slow: 5
+    #设置采集频率，最高为100,默认为30
+    sample_rate: 100
+    #最大闲置的连接数;默认为10
+    max_idle_conn: 5
+    #最大打开的连接数;默认为20
+    max_open_conn: 10
+    #超时时长-默认为60(单位分钟)
+    max_lifetime: 60
+    max_conn: 100
+    source:
+      blog_writer: root:Sholes123@tcp(101.200.38.157:3306)/jz
+      blog_reader: root:Sholes123@tcp(101.200.38.157:3306)/jz
   redis:
     addr: 127.0.0.1:6379
     read_timeout: 0.2s

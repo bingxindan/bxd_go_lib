@@ -3,9 +3,7 @@ package db
 import (
 	"context"
 	"github.com/bingxindan/bxd_go_lib/config"
-	"github.com/bingxindan/bxd_go_lib/tools/confutil"
 	"log"
-	"strings"
 	"sync/atomic"
 	"time"
 
@@ -21,7 +19,7 @@ type DBDao struct {
 }
 
 var (
-	db_instance  map[string][]*DBDao
+	dbInstance   map[string][]*DBDao
 	curDbPoses   map[string]*uint64 // 当前选择的数据库
 	showSql      bool
 	showExecTime bool
@@ -55,58 +53,48 @@ func GetDefault(cluster string) *DBDao {
 }
 
 func init() {
-	db_instance = make(map[string][]*DBDao, 0)
+	dbInstance = make(map[string][]*DBDao, 0)
 	curDbPoses = make(map[string]*uint64)
-	//idc := confdao.GetIDC()
-	idc := ""
-	showSqlStr := config.String("data.mysql.show_sql")
-	showSql = showSqlStr == "true"
 
-	showExecTimeStr := config.String("data.mysql.show_exec_time")
-	showExecTime = showExecTimeStr == "true"
-
-	slowStr := config.String("data.mysql.slow")
-	slowDuration = time.Duration(cast.ToInt(slowStr)) * time.Millisecond
-
-	maxConnStr := config.String("data.mysql.max_conn")
-	maxConnConfig := cast.ToInt(maxConnStr)
+	showSql = config.Bool("data.mysql.show_sql")
+	showExecTime = config.Bool("data.mysql.show_exec_time")
+	slowDuration = config.Duration("data.mysql.slow")
+	maxConnConfig := config.Int("data.mysql.max_conn")
 	if maxConnConfig > 0 {
 		maxConn = maxConnConfig
 	}
-
-	maxIdleStr := config.String("data.mysql.max_idle_conn")
-	maxIdleConfig := cast.ToInt(maxIdleStr)
+	maxIdleConfig := config.Int("data.mysql.max_idle_conn")
 	if maxIdleConfig > 0 {
 		maxIdle = maxIdleConfig
 	}
-
 	if maxIdle > maxConn {
 		maxIdle = maxConn
 	}
 
-	for cluster, hosts := range confutil.GetConfArrayMap("MysqlCluster") {
-		items := strings.Split(cluster, ".")
-		//必须包含 writer 和 reader
-		if len(items) < 2 {
-			continue
-		}
-		//过滤IDC
-		if len(items) > 2 && items[2] != idc {
-			continue
-		}
-		instance := items[0] + "." + items[1]
-		dbs := make([]*DBDao, 0)
-		for _, host := range hosts {
-			dbs = append(dbs, newDBDaoWithParams(host, "mysql"))
-		}
-		db_instance[instance] = dbs
-		curDbPoses[instance] = new(uint64)
+	// 主实例
+	keyWriter := config.String("data.mysql.source.key_writer")
+	hostWriters := config.StringList("data.mysql.source.host_writer")
+	dbWriters := make([]*DBDao, 0)
+	for _, hostWriter := range hostWriters {
+		dbWriters = append(dbWriters, newDBDaoWithParams(hostWriter, "mysql"))
 	}
+	dbInstance[keyWriter] = dbWriters
+	curDbPoses[keyWriter] = new(uint64)
+
+	// 从实例
+	keyReader := config.String("data.mysql.source.key_reader")
+	hostReaders := config.StringList("data.mysql.source.host_reader")
+	dbReaders := make([]*DBDao, 0)
+	for _, hostReader := range hostReaders {
+		dbReaders = append(dbReaders, newDBDaoWithParams(hostReader, "mysql"))
+	}
+	dbInstance[keyReader] = dbReaders
+	curDbPoses[keyReader] = new(uint64)
 }
 
 func GetDbInstance(db, cluster string) *DBDao {
 	key := db + "." + cluster
-	if instances, ok := db_instance[key]; ok {
+	if instances, ok := dbInstance[key]; ok {
 		// round-robin选择数据库
 		cur := atomic.AddUint64(curDbPoses[key], 1) % uint64(len(instances))
 		return instances[cur]
@@ -121,7 +109,7 @@ func GetDbInstanceWithCtx(ctx context.Context, db, cluster string) *DBDao {
 		db = "benchmark_" + db
 	}
 	key := db + "." + cluster
-	if instances, ok := db_instance[key]; ok {
+	if instances, ok := dbInstance[key]; ok {
 		// round-robin选择数据库
 		cur := atomic.AddUint64(curDbPoses[key], 1) % uint64(len(instances))
 		return instances[cur]
