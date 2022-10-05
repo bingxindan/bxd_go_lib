@@ -24,6 +24,7 @@ require (
 	github.com/smartystreets/goconvey v1.7.2 // indirect
 	github.com/spf13/cast v1.4.1
 	github.com/tidwall/pretty v1.2.0
+	github.com/xhit/go-str2duration/v2 v2.0.0 // indirect
 	go.etcd.io/etcd/api/v3 v3.5.0
 	go.etcd.io/etcd/client/v3 v3.5.0
 	go.uber.org/zap v1.19.1

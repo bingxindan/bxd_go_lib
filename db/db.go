@@ -2,6 +2,7 @@ package db
 
 import (
 	"context"
+	"github.com/bingxindan/bxd_go_lib/config"
 	"github.com/bingxindan/bxd_go_lib/tools/confutil"
 	"log"
 	"strings"
@@ -25,8 +26,8 @@ var (
 	showSql      bool
 	showExecTime bool
 	slowDuration time.Duration
-	maxConn      int = 100
-	maxIdle      int = 30
+	maxConn      = 100
+	maxIdle      = 30
 )
 
 func newDBDaoWithParams(host string, driver string) (Db *DBDao) {
@@ -58,21 +59,31 @@ func init() {
 	curDbPoses = make(map[string]*uint64)
 	//idc := confdao.GetIDC()
 	idc := ""
-	showLog := confutil.GetConfStringMap("MysqlConfig")
-	showSql = showLog["showSql"] == "true"
-	showExecTime = showLog["showExecTime"] == "true"
-	slowDuration = time.Duration(cast.ToInt(showLog["slowDuration"])) * time.Millisecond
-	maxConnConfig := cast.ToInt(showLog["maxConn"])
+	showSqlStr := config.String("data.mysql.show_sql")
+	showSql = showSqlStr == "true"
+
+	showExecTimeStr := config.String("data.mysql.show_exec_time")
+	showExecTime = showExecTimeStr == "true"
+
+	slowStr := config.String("data.mysql.slow")
+	slowDuration = time.Duration(cast.ToInt(slowStr)) * time.Millisecond
+
+	maxConnStr := config.String("data.mysql.max_conn")
+	maxConnConfig := cast.ToInt(maxConnStr)
 	if maxConnConfig > 0 {
 		maxConn = maxConnConfig
 	}
-	maxIdleConfig := cast.ToInt(showLog["maxIdle"])
+
+	maxIdleStr := config.String("data.mysql.max_idle_conn")
+	maxIdleConfig := cast.ToInt(maxIdleStr)
 	if maxIdleConfig > 0 {
 		maxIdle = maxIdleConfig
 	}
+
 	if maxIdle > maxConn {
 		maxIdle = maxConn
 	}
+
 	for cluster, hosts := range confutil.GetConfArrayMap("MysqlCluster") {
 		items := strings.Split(cluster, ".")
 		//必须包含 writer 和 reader
