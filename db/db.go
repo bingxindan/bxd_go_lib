@@ -92,11 +92,10 @@ func init() {
 	curDbPoses[keyReader] = new(uint64)
 }
 
-func GetDbInstance(db, cluster string) *DBDao {
-	key := db + "." + cluster
-	if instances, ok := dbInstance[key]; ok {
+func GetDbInstance(dbCluster string) *DBDao {
+	if instances, ok := dbInstance[dbCluster]; ok {
 		// round-robin选择数据库
-		cur := atomic.AddUint64(curDbPoses[key], 1) % uint64(len(instances))
+		cur := atomic.AddUint64(curDbPoses[dbCluster], 1) % uint64(len(instances))
 		return instances[cur]
 	} else {
 		return nil

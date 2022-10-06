@@ -69,82 +69,82 @@ func CastToParamInDesc(input interface{}) ParamInDesc {
 	return ParamInDesc(CastToParamIn(input))
 }
 
-func (this *DbBaseDao) InitSession() {
-	if this.Session == nil {
-		this.Session = this.Engine.Where("")
+func (d *DbBaseDao) InitSession() {
+	if d.Session == nil {
+		d.Session = d.Engine.Where("")
 	}
 }
 
 //通过此方法，可以指定表名称
-func (this *DbBaseDao) SetTable(tableName string) {
-	if this.Session == nil {
-		this.InitSession()
+func (d *DbBaseDao) SetTable(tableName string) {
+	if d.Session == nil {
+		d.InitSession()
 	}
 
-	this.Session.Table(tableName)
+	d.Session.Table(tableName)
 }
 
-func (this *DbBaseDao) BuildQuery(input Param, name string) {
-	name = this.Engine.Quote(name)
+func (d *DbBaseDao) BuildQuery(input Param, name string) {
+	name = d.Engine.Quote(name)
 
 	switch val := input.(type) {
 	case ParamDesc:
 		if val {
-			this.Session = this.Session.Desc(name)
+			d.Session = d.Session.Desc(name)
 		}
 	case ParamIn:
 		if len(val) == 1 {
-			this.Session = this.Session.And(name+"=?", val[0])
+			d.Session = d.Session.And(name+"=?", val[0])
 		} else {
-			this.Session = this.Session.In(name, val)
+			d.Session = d.Session.In(name, val)
 		}
 	case ParamInDesc:
 		if len(val) == 1 {
-			this.Session = this.Session.And(name+"=?", val[0])
+			d.Session = d.Session.And(name+"=?", val[0])
 		} else {
-			this.Session = this.Session.In(name, val)
+			d.Session = d.Session.In(name, val)
 		}
-		this.Session = this.Session.Desc(name)
+		d.Session = d.Session.Desc(name)
 	case ParamRange:
 		if val.Min != nil {
-			this.Session = this.Session.And(name+">=?", val.Min)
+			d.Session = d.Session.And(name+">=?", val.Min)
 		}
 		if val.Max != nil {
-			this.Session = this.Session.And(name+"<?", val.Max)
+			d.Session = d.Session.And(name+"<?", val.Max)
 		}
 	case ParamRangeDesc:
 		if val.Min != nil {
-			this.Session = this.Session.And(name+">=?", val.Min)
+			d.Session = d.Session.And(name+">=?", val.Min)
 		}
 		if val.Max != nil {
-			this.Session = this.Session.And(name+"<?", val.Max)
+			d.Session = d.Session.And(name+"<?", val.Max)
 		}
-		this.Session = this.Session.Desc(name)
+		d.Session = d.Session.Desc(name)
 	case ParamNil:
 	case nil:
 	default:
-		this.Session = this.Session.And(name+"=?", val)
+		d.Session = d.Session.And(name+"=?", val)
 	}
 }
 
-func (this *DbBaseDao) UpdateEngine(v ...interface{}) {
+func (d *DbBaseDao) UpdateEngine(v ...interface{}) {
 	if len(v) == 0 {
-		this.Engine = GetDefault("reader").Engine
-		this.Session = nil
+		d.Engine = GetDefault("reader").Engine
+		d.Session = nil
 	} else if len(v) == 1 {
 		param := v[0]
 		if engine, ok := param.(*Engine); ok {
-			this.Engine = engine
-			this.Session = nil
+			d.Engine = engine
+			d.Session = nil
 		} else if session, ok := param.(*Session); ok {
-			this.Session = session
+			d.Session = session
 		} else if tpe, ok := param.(bool); ok {
 			cluster := "reader"
 			if tpe == true {
 				cluster = "writer"
 			}
-			this.Engine = GetDefault(cluster).Engine
-			this.Session = nil
+			d.Engine = GetDefault(cluster).Engine
+			d.Session = nil
 		}
 	}
 }
