@@ -49,7 +49,7 @@ func newDBDaoWithParams(host string, driver string) (Db *DBDao) {
 }
 
 func GetDefault(cluster string) *DBDao {
-	return GetDbInstance("default", cluster)
+	return GetDbInstance(cluster)
 }
 
 func init() {
